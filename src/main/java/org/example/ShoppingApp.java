@@ -1,13 +1,15 @@
 package org.example;
 
 import org.example.model.Cart;
-import org.example.price.SimplePriceCalculator;
-import org.example.products.DummyProductRepository;
-import org.example.shop.SimpleShopService;
+import org.example.shop.PromoShopService;
+import org.example.shop.ShopService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class ShoppingApp {
     public static void main(String[] args) {
-        SimpleShopService shop = new SimpleShopService(new SimplePriceCalculator(), new DummyProductRepository());
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ShopService shop = context.getBean(ShopService.class);
 
         Cart cart = new Cart();
         cart.withAmount(1, 3);
@@ -15,5 +17,8 @@ public class ShoppingApp {
         cart.withAmount(3, 3);
 
         shop.purchase(cart);
+
+        ShopService promoShop = context.getBean(PromoShopService.class);
+        promoShop.purchase(cart);
     }
 }

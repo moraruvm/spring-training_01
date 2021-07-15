@@ -1,17 +1,25 @@
 package org.example.price;
 
 import org.example.model.Purchase;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-public class SimplePriceCalculator implements PriceCalculator {
+public class VATPriceCalculator implements PriceCalculator {
+
+    private double taxRate;
+
+    public VATPriceCalculator(double taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    @Override
     public double getTotal(List<Purchase> purchases) {
-        return purchases.stream().mapToDouble(purchase -> {
+        double sum = purchases.stream().mapToDouble(purchase -> {
             double price = purchase.getProduct().getPrice();
             int quantity = purchase.getQuantity();
             return price * quantity;
         }).sum();
+
+        return sum + sum * taxRate;
     }
 }

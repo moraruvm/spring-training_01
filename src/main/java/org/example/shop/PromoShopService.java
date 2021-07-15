@@ -1,15 +1,15 @@
 package org.example.shop;
 
+import org.example.Promo;
 import org.example.price.PriceCalculator;
 import org.example.products.ProductRepository;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
-public class SimpleShopService extends AbstractShopService {
+@Promo
+public class PromoShopService extends AbstractShopService {
 
-    public SimpleShopService(PriceCalculator priceCalculator, ProductRepository productRepository) {
+    public PromoShopService(@Promo PriceCalculator priceCalculator, ProductRepository productRepository) {
         super(priceCalculator, productRepository);
     }
 }

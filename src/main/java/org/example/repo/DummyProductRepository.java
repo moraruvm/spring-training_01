@@ -1,18 +1,15 @@
-package org.example.products;
+package org.example.repo;
 
 import org.example.model.Product;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Repository
-@Primary
 public class DummyProductRepository implements ProductRepository {
 
     private final Map<Integer, Product> products;
@@ -27,8 +24,12 @@ public class DummyProductRepository implements ProductRepository {
     }
 
     @Override
-    public Set<Product> find(Collection<Integer> ids) {
-        return ids.stream().map(this.products::get).collect(Collectors.toSet());
+    public List<Product> findAllById(Iterable<Integer> ids) {
+        return StreamSupport.stream(ids.spliterator(), false).map(this.products::get).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Product> findAll() {
+        return products.values().stream().collect(Collectors.toList());
+    }
 }

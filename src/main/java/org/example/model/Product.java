@@ -1,15 +1,24 @@
 package org.example.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
+@Entity
 public class Product {
 
     private static DecimalFormat PRICE_FORMAT = new DecimalFormat("#.##");
 
-    private final int id;
-    private final String name;
-    private final double price;
+    @Id
+    @GeneratedValue
+    private int id;
+    private String name;
+    private double price;
+
+    public Product() {
+    }
 
     public Product(int id, String name, double price) {
         this.id = id;

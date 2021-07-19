@@ -3,19 +3,18 @@ package org.example.shop;
 import org.example.model.Cart;
 import org.example.model.Product;
 import org.example.model.Purchase;
-import org.example.price.PriceCalculator;
-import org.example.products.ProductRepository;
+import org.example.repo.ProductRepository;
+import org.example.shop.price.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AbstractShopService implements ShopService{
+public class AbstractShopService implements ShopService {
 
     private final PriceCalculator priceCalculator;
 
@@ -29,7 +28,7 @@ public class AbstractShopService implements ShopService{
     }
 
     @Override
-    public void purchase(Cart cart) {
+    public double purchase(Cart cart) {
         Map<Integer, Product> productsById = getById(cart.getItems().keySet());
         List<Purchase> quantities = getPurchases(cart.getItems(), productsById);
 
@@ -37,10 +36,12 @@ public class AbstractShopService implements ShopService{
 
         System.out.println("Purchased the following items for " + total + ":");
         quantities.stream().map(product -> "- " + product).forEach(System.out::println);
+
+        return total;
     }
 
     private Map<Integer, Product> getById(Collection<Integer> productIds) {
-        Set<Product> products = productRepository.find(productIds);
+        List<Product> products = productRepository.findAllById(productIds);
         return products.stream().collect(Collectors.toMap(Product::getId, Function.identity()));
     }
 

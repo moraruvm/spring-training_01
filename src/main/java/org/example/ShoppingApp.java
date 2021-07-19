@@ -1,24 +1,19 @@
 package org.example;
 
-import org.example.model.Cart;
-import org.example.shop.PromoShopService;
-import org.example.shop.ShopService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.example.repo.ProductRepository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
+@SpringBootApplication
 public class ShoppingApp {
+
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        ShopService shop = context.getBean(ShopService.class);
+        ConfigurableApplicationContext ctx = SpringApplication.run(ShoppingApp.class, args);
 
-        Cart cart = new Cart();
-        cart.withAmount(1, 3);
-        cart.withAmount(2, 3);
-        cart.withAmount(3, 3);
-
-        shop.purchase(cart);
-
-        ShopService promoShop = context.getBean(PromoShopService.class);
-        promoShop.purchase(cart);
+        // we can also start getting spring beans here
+        ctx.getBean(ProductRepository.class);
+        // but our application has other "inputs" now, like handling http requests
     }
+
 }

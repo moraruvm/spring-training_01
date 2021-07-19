@@ -1,7 +1,7 @@
 package org.example.shop;
 
-import org.example.price.PriceCalculator;
-import org.example.products.ProductRepository;
+import org.example.shop.price.PriceCalculator;
+import org.example.repo.ProductRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

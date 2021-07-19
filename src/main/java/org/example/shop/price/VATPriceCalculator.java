@@ -1,4 +1,4 @@
-package org.example.price;
+package org.example.shop.price;
 
 import org.example.model.Purchase;
 
